@@ -4,10 +4,10 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Tile {
-    private int row;
-    private int col;
-    private int widthOfTile;
-    private int heightOfTile;
+    protected int row;
+    protected int col;
+    protected int widthOfTile;
+    protected int heightOfTile;
 
     /**
      * Constructor for Tile
@@ -40,7 +40,7 @@ public class Tile {
         outlineRenderer(g, lineDrawer, tileX, tileY);
     }
 
-    private void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {
+    protected static void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {
         g.setColor(Color.BLACK);
         Line2D line0 = new Line2D.Float(tileX, tileY, tileX, tileY +99);
         Line2D line1 = new Line2D.Float(tileX +99, tileY, tileX +99, tileY +99);
