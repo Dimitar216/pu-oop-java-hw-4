@@ -49,13 +49,17 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void startTileMovement(int row, int col, Tile tile) {
-        int initialRow = tile.getRow();
-        int initialCol = tile.getCol();
-        tile.move(row, col);
-        this.tileCollection[tile.getRow()][tile.getCol()] = this.selectedTile;
-        this.tileCollection[initialRow][initialCol] = null;
-        this.selectedTile = null;
-        this.repaint();
+        if(tile.isMoveValid(row,col)) {
+            int initialRow = tile.getRow();
+            int initialCol = tile.getCol();
+            tile.move(row, col);
+            this.tileCollection[tile.getRow()][tile.getCol()] = this.selectedTile;
+            this.tileCollection[initialRow][initialCol] = null;
+            this.selectedTile = null;
+            this.repaint();
+        } else {
+            Modal.render(this,"Warning!","Invalid move");
+        }
     }
 
     @Override
@@ -109,6 +113,7 @@ public class GameBoard extends JFrame implements MouseListener {
             tileCollection[7][7] = startingTile;
         }
     }
+
     private void uninhabitableTilesGenerator(){
         for(int i = 0; i<5;i++){
             int randomCoordinateRow = ThreadLocalRandom.current().nextInt(0,8);
@@ -121,6 +126,7 @@ public class GameBoard extends JFrame implements MouseListener {
             }
         }
     }
+
     private void gpsTilesGenerator(){
         for(int i = 0; i<8;i++){
             int randomCoordinateRow = ThreadLocalRandom.current().nextInt(0,8);
@@ -133,6 +139,7 @@ public class GameBoard extends JFrame implements MouseListener {
             }
         }
     }
+
     private void tileRenderer(Graphics g,int row,int col){
         if(this.hasBoardTile(row,col)){
             Tile tile = getBoardTile(row,col);
@@ -148,6 +155,7 @@ public class GameBoard extends JFrame implements MouseListener {
             }
         }
     }
+
     private int getBoardCoordinates(int coordinates){
         return  coordinates/TILE_SIZE;
     }
@@ -155,7 +163,6 @@ public class GameBoard extends JFrame implements MouseListener {
     private Tile getBoardTile(int row, int col){
         return this.tileCollection[row][col];
     }
-
 
     private boolean hasBoardTile(int row,int col){
         return this.getBoardTile(row,col) !=null;
