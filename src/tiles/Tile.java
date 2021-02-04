@@ -1,5 +1,7 @@
 package tiles;
 
+import ui.Modal;
+
 import java.awt.*;
 import java.awt.geom.Line2D;
 
@@ -43,8 +45,8 @@ public class Tile {
     }
 
     public void move(int row,int col){
-        this.row = row;
-        this.col = col;
+            this.row = row;
+            this.col = col;
     }
 
     public int getRow() {
@@ -59,8 +61,8 @@ public class Tile {
         return color;
     }
 
-    public boolean isMoveValid(int moveRow,int moveCol,Tile tile){
-        if(tile.getColor().equals(Color.WHITE)) {
+    public boolean isMoveValid(int moveRow,int moveCol){
+        if(this.getColor().equals(Color.WHITE)) {
             int rowCoefficient = Math.abs(moveRow - this.row);
             int colCoefficient = Math.abs(moveCol - this.col);
 

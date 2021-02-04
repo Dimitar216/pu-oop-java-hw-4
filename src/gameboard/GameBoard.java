@@ -23,6 +23,7 @@ public class GameBoard extends JFrame implements MouseListener {
         this.setSize(800, 800);
         this.setVisible(true);
         this.addMouseListener(this);
+        System.out.println(startingPosition);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void startTileMovement(int row, int col, Tile tile) {
-        if(tile.isMoveValid(row,col,tile)) {
+        if(tile.isMoveValid(row,col)) {
             int initialRow = tile.getRow();
             int initialCol = tile.getCol();
             tile.move(row, col);
@@ -58,7 +59,7 @@ public class GameBoard extends JFrame implements MouseListener {
             this.selectedTile = null;
             this.repaint();
         } else {
-            Modal.render(this,"Warning!","Invalid move");
+            Modal.render(this,"Warning!","Invalid move.");
         }
     }
 
@@ -102,16 +103,16 @@ public class GameBoard extends JFrame implements MouseListener {
     private void StartTileInitializer() {
         if(startingPosition == 1){
             Tile startingTile = new Tile(0, 0,TILE_SIZE,TILE_SIZE,Color.WHITE);
-            tileCollection[0][0] = startingTile;
+            this.tileCollection[0][0] = startingTile;
         }else if(startingPosition == 2){
-            Tile startingTile = new Tile(0, 0,TILE_SIZE,TILE_SIZE,Color.WHITE);
-            tileCollection[7][0] = startingTile;
+            Tile startingTile = new Tile(7, 0,TILE_SIZE,TILE_SIZE,Color.WHITE);
+            this.tileCollection[7][0] = startingTile;
         }else if(startingPosition == 3){
-            Tile startingTile = new Tile(0, 0,TILE_SIZE,TILE_SIZE,Color.WHITE);
-            tileCollection[0][7] = startingTile;
+            Tile startingTile = new Tile(0, 7,TILE_SIZE,TILE_SIZE,Color.WHITE);
+            this.tileCollection[0][7] = startingTile;
         }else if(startingPosition == 4){
-            Tile startingTile = new Tile(0, 0,TILE_SIZE,TILE_SIZE,Color.WHITE);
-            tileCollection[7][7] = startingTile;
+            Tile startingTile = new Tile(7, 7,TILE_SIZE,TILE_SIZE,Color.WHITE);
+            this.tileCollection[7][7] = startingTile;
         }
     }
 
