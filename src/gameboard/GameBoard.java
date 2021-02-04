@@ -49,7 +49,7 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void startTileMovement(int row, int col, Tile tile) {
-        if(tile.isMoveValid(row,col)) {
+        if(tile.isMoveValid(row,col,tile)) {
             int initialRow = tile.getRow();
             int initialCol = tile.getCol();
             tile.move(row, col);
@@ -81,6 +81,7 @@ public class GameBoard extends JFrame implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
     @Override
     public void paint(Graphics g){
         for(int row = 0; row < 8;row++){

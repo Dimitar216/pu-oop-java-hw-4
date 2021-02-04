@@ -59,11 +59,14 @@ public class Tile {
         return color;
     }
 
-    public boolean isMoveValid(int moveRow,int moveCol){
-        int rowCoefficient =  Math.abs(moveRow-this.row);
-        int colCoefficient =  Math.abs(moveCol - this.col);
+    public boolean isMoveValid(int moveRow,int moveCol,Tile tile){
+        if(tile.getColor().equals(Color.WHITE)) {
+            int rowCoefficient = Math.abs(moveRow - this.row);
+            int colCoefficient = Math.abs(moveCol - this.col);
 
-        return rowCoefficient == 0 && colCoefficient == 1 || rowCoefficient == 1 && colCoefficient == 0;
+            return rowCoefficient == 0 && colCoefficient == 1 || rowCoefficient == 1 && colCoefficient == 0;
+        }
+        return false;
     }
 
     private static void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {

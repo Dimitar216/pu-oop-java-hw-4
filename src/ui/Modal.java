@@ -13,7 +13,7 @@ public class Modal extends JDialog {
      * @param title title of the window.
      * @param message message inside the window.
      */
-    public Modal( JFrame parent, String title, String message ) {
+    private Modal( JFrame parent, String title, String message ) {
         super(parent, title, true);
 
         JPanel panel = new JPanel();
