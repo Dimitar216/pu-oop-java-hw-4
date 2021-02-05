@@ -50,12 +50,20 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void startTileMovement(int row, int col, Tile tile) {
-        if(tile.isMoveValid(row,col)) {
+        if(tile.isMoveValid(row,col)&& tile.isMovingTile()) {
+            int tileRoll = ThreadLocalRandom.current().nextInt(1,11);
+            System.out.println(tileRoll);
             int initialRow = tile.getRow();
             int initialCol = tile.getCol();
             tile.move(row, col);
-            this.tileCollection[tile.getRow()][tile.getCol()] = this.selectedTile;
-            this.tileCollection[initialRow][initialCol] = null;
+            if(tileRoll>2) {
+                this.tileCollection[tile.getRow()][tile.getCol()] = this.selectedTile;
+                Tile tileOld = new Tile(initialRow, initialCol, TILE_SIZE, TILE_SIZE, Color.WHITE);
+                tileOld.setMovingTile(false);
+            } else {
+                Tile UninhabitableTile = new Tile(row,col,TILE_SIZE,TILE_SIZE,Color.BLUE);
+                this.tileCollection[UninhabitableTile.getRow()][UninhabitableTile.getCol()] = UninhabitableTile;
+            }
             this.selectedTile = null;
             this.repaint();
         } else {

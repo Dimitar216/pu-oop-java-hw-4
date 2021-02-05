@@ -11,6 +11,7 @@ public class Tile {
     private final int widthOfTile;
     private final int heightOfTile;
     private final Color color;
+    private boolean isMovingTile = true;
 
     /**
      * Constructor for Tile
@@ -69,6 +70,14 @@ public class Tile {
             return rowCoefficient == 0 && colCoefficient == 1 || rowCoefficient == 1 && colCoefficient == 0;
         }
         return false;
+    }
+
+    public boolean isMovingTile() {
+        return isMovingTile;
+    }
+
+    public void setMovingTile(boolean movingTile) {
+        isMovingTile = movingTile;
     }
 
     private static void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {
