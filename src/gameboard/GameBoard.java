@@ -52,7 +52,6 @@ public class GameBoard extends JFrame implements MouseListener {
     private void startTileMovement(int row, int col, Tile tile) {
         if(tile.isMoveValid(row,col)&& tile.isMovingTile()) {
             int tileRoll = ThreadLocalRandom.current().nextInt(1,11);
-            System.out.println(tileRoll);
             int initialRow = tile.getRow();
             int initialCol = tile.getCol();
             tile.move(row, col);
