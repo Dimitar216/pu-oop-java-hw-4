@@ -9,6 +9,5 @@ public class RestartButton implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         GameBoard gameBoard = new GameBoard();
-        gameBoard.setVisible(true);
     }
 }
