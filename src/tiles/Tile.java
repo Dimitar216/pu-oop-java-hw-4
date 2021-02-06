@@ -11,7 +11,9 @@ public class Tile {
     private final int widthOfTile;
     private final int heightOfTile;
     private final Color color;
-    private boolean isMovingTile = true;
+    private final String selectedSymbol = "?";
+    private boolean isPieceSelected = false;
+
 
     /**
      * Constructor for Tile
@@ -32,17 +34,21 @@ public class Tile {
      * renders tile on the board based on row/col and width/height.
      * @param g graphics component
      */
-    public void render(Graphics g){
-
+    public void render(Graphics g) {
         Graphics2D lineDrawer = (Graphics2D) g;
 
-        int tileX =  (this.col * this.widthOfTile);
-        int tileY =  (this.row * this.heightOfTile);
+        int tileX = (this.col * this.widthOfTile);
+        int tileY = (this.row * this.heightOfTile);
 
         g.setColor(this.color);
-        g.fillRect(tileX,tileY,this.widthOfTile, this.heightOfTile);
+        g.fillRect(tileX, tileY, this.widthOfTile, this.heightOfTile);
 
         outlineRenderer(g, lineDrawer, tileX, tileY);
+
+        if (isPieceSelected&&this.color.equals(Color.WHITE)) {
+            g.setColor(Color.BLACK);
+            g.drawString(this.selectedSymbol, tileX + 50, tileY + 50);
+        }
     }
 
     public void move(int row,int col){
@@ -58,6 +64,10 @@ public class Tile {
         return col;
     }
 
+    public void setPieceSelected(boolean pieceSelected) {
+        isPieceSelected = pieceSelected;
+    }
+
     public Color getColor() {
         return color;
     }
@@ -70,14 +80,6 @@ public class Tile {
             return rowCoefficient == 0 && colCoefficient == 1 || rowCoefficient == 1 && colCoefficient == 0;
         }
         return false;
-    }
-
-    public boolean isMovingTile() {
-        return isMovingTile;
-    }
-
-    public void setMovingTile(boolean movingTile) {
-        isMovingTile = movingTile;
     }
 
     private static void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {
@@ -95,4 +97,5 @@ public class Tile {
         //bottom
         lineDrawer.draw(line3);
     }
+
 }

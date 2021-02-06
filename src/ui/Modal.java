@@ -7,6 +7,8 @@ import javax.swing.*;
  */
 public class Modal extends JDialog {
 
+    private static JButton jButton = new JButton("Restart");
+
     /**
      * Constructor
      * @param parent the parent JFrame that will be using it.
@@ -25,6 +27,20 @@ public class Modal extends JDialog {
         pack();
         setVisible(true);
     }
+    private Modal(String title, String message,JFrame parent ) {
+        super(parent, title, true);
+
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel(message);
+
+        panel.add(label);
+        panel.add(jButton);
+        jButton.addActionListener(new RestartButton());
+        getContentPane().add(panel);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        pack();
+        setVisible(true);
+    }
 
     /**
      * Method that creates an instance of Modal class constructor.
@@ -34,5 +50,9 @@ public class Modal extends JDialog {
      */
     public static void render(JFrame parent, String title, String message) {
         new Modal(parent, title, message);
+    }
+
+    public static void renderEndOfGame(JFrame parent, String title, String message){
+        new Modal(title,message,parent);
     }
 }

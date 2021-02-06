@@ -11,6 +11,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameBoard extends JFrame implements MouseListener {
     private final int startingPosition = ThreadLocalRandom.current().nextInt(1,5);
+    private final int witchLocation = ThreadLocalRandom.current().nextInt(1,9);
+    private int witchVisits = 0;
     private final Tile[][] tileCollection = new Tile[8][8];
     private final int TILE_SIZE = 100;
     private Tile selectedTile;
@@ -23,7 +25,6 @@ public class GameBoard extends JFrame implements MouseListener {
         this.setSize(800, 800);
         this.setVisible(true);
         this.addMouseListener(this);
-        System.out.println(startingPosition);
     }
 
     @Override
@@ -43,6 +44,7 @@ public class GameBoard extends JFrame implements MouseListener {
             if(this.hasBoardTile(row,col)){
                 Tile tile = getBoardTile(row,col);
                 if(tile.getColor().equals(Color.WHITE)){
+                    tile.setPieceSelected(true);
                     this.selectedTile = this.getBoardTile(row,col);
                 }else {Modal.render(this,"Warning!","You can select only the white tile"); }
             }else{Modal.render(this,"Warning!","Nothing to select.");}
@@ -50,17 +52,23 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void startTileMovement(int row, int col, Tile tile) {
-        if(tile.isMoveValid(row,col)&& tile.isMovingTile()) {
+        if(tile.isMoveValid(row,col)) {
             int tileRoll = ThreadLocalRandom.current().nextInt(1,11);
             int initialRow = tile.getRow();
             int initialCol = tile.getCol();
             tile.move(row, col);
-            if(tileRoll>2) {
+            if (tileRoll > 2) {
+                if(this.tileCollection[tile.getRow()][tile.getCol()] != null){
+                    this.tileCollection[tile.getRow()][tile.getCol()] = null;
+                    witchVisits++;
+                    if(witchVisits == witchLocation){
+                        Modal.renderEndOfGame(this,"Congratulations!","You win!");
+                    }
+                }
                 this.tileCollection[tile.getRow()][tile.getCol()] = this.selectedTile;
                 Tile tileOld = new Tile(initialRow, initialCol, TILE_SIZE, TILE_SIZE, Color.WHITE);
-                tileOld.setMovingTile(false);
             } else {
-                Tile UninhabitableTile = new Tile(row,col,TILE_SIZE,TILE_SIZE,Color.BLUE);
+                Tile UninhabitableTile = new Tile(row, col, TILE_SIZE, TILE_SIZE, Color.BLUE);
                 this.tileCollection[UninhabitableTile.getRow()][UninhabitableTile.getCol()] = UninhabitableTile;
             }
             this.selectedTile = null;
@@ -142,6 +150,7 @@ public class GameBoard extends JFrame implements MouseListener {
             int randomCoordinateCol = ThreadLocalRandom.current().nextInt(0,8);
             if(tileCollection[randomCoordinateRow][randomCoordinateCol] == null){
                 Tile gpsTile = new Tile(randomCoordinateRow,randomCoordinateCol,TILE_SIZE,TILE_SIZE,Color.RED);
+                //gpsTile.witchID = i+1;
                 tileCollection[randomCoordinateRow][randomCoordinateCol] = gpsTile;
             } else {
                 i--;
@@ -158,6 +167,9 @@ public class GameBoard extends JFrame implements MouseListener {
             } else if(tile.getColor().equals(Color.RED)){
                 Tile gpsTile = new Tile(row,col,TILE_SIZE,TILE_SIZE,Color.RED);
                 gpsTile.render(g);
+                //g.setColor(Color.WHITE);
+                //String id = String.valueOf(gpsTile.witchID);
+                //g.drawString(id,(100*col)+50,(100*row)+50);
             } else if(tile.getColor().equals(Color.WHITE)){
                 Tile startingTile = new Tile(row,col,TILE_SIZE,TILE_SIZE,Color.WHITE);
                 startingTile.render(g);
