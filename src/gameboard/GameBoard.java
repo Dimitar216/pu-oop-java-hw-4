@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameBoard extends JFrame implements MouseListener {
     private final int startingPosition = ThreadLocalRandom.current().nextInt(1,5);
-    private final int witchLocation =1; //ThreadLocalRandom.current().nextInt(1,9);
+    private final int witchLocation =ThreadLocalRandom.current().nextInt(1,9);
     private int witchVisits = 0;
     private final Tile[][] tileCollection = new Tile[8][8];
     private final int TILE_SIZE = 100;
