@@ -82,6 +82,31 @@ public class Tile {
         return false;
     }
 
+    public boolean isPlayerStuck(int moveRow,int moveCol,Tile[][] tile){
+        if(moveRow+1<=7){ if (tile[moveRow+1][moveCol] != null) { if(tile[moveRow+1][moveCol].getColor().equals(Color.RED)){ return false;
+                }
+            } else { return false;
+            }
+        }
+        if(moveRow-1>=0){ if (tile[moveRow-1][moveCol] != null) { if(tile[moveRow-1][moveCol].getColor().equals(Color.RED)){ return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        if(moveCol + 1<=7){ if (tile[moveRow][moveCol+1] != null) { if(tile[moveRow][moveCol+1].getColor().equals(Color.RED)){ return false;
+                }
+            } else { return false;
+            }
+        }
+        if(moveCol -1 >= 0){ if (tile[moveRow][moveCol-1] != null) { if(tile[moveRow][moveCol-1].getColor().equals(Color.RED)){ return false;
+                }
+            } else { return false;
+            }
+        }
+        return true;
+    }
+
     private static void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {
         g.setColor(Color.BLACK);
         Line2D line0 = new Line2D.Float(tileX, tileY, tileX, tileY +99);

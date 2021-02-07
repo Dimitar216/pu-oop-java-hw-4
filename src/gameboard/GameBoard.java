@@ -52,19 +52,16 @@ public class GameBoard extends JFrame implements MouseListener {
     }
 
     private void startTileMovement(int row, int col, Tile tile) {
+        if(tile.isPlayerStuck(row,col,this.tileCollection)){
+            Modal.renderEndOfGame(this,"You are stuck!","You lose!");
+        }
         if(tile.isMoveValid(row,col)) {
             int tileRoll = ThreadLocalRandom.current().nextInt(1,11);
             int initialRow = tile.getRow();
             int initialCol = tile.getCol();
             tile.move(row, col);
             if (tileRoll > 2) {
-                if(this.tileCollection[tile.getRow()][tile.getCol()] != null){
-                    this.tileCollection[tile.getRow()][tile.getCol()] = null;
-                    witchVisits++;
-                    if(witchVisits == witchLocation){
-                        Modal.renderEndOfGame(this,"Congratulations!","You win!");
-                    }
-                }
+                witchCheck(tile);
                 this.tileCollection[tile.getRow()][tile.getCol()] = this.selectedTile;
                 Tile tileOld = new Tile(initialRow, initialCol, TILE_SIZE, TILE_SIZE, Color.WHITE);
             } else {
@@ -75,6 +72,16 @@ public class GameBoard extends JFrame implements MouseListener {
             this.repaint();
         } else {
             Modal.render(this,"Warning!","Invalid move.");
+        }
+    }
+
+    private void witchCheck(Tile tile) {
+        if(this.tileCollection[tile.getRow()][tile.getCol()] != null&&this.tileCollection[tile.getRow()][tile.getCol()].getColor().equals(Color.RED)){
+            this.tileCollection[tile.getRow()][tile.getCol()] = null;
+            witchVisits++;
+            if(witchVisits == witchLocation){
+                Modal.renderEndOfGame(this,"Congratulations!","You win!");
+            }
         }
     }
 
