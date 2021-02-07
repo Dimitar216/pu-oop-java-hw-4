@@ -27,6 +27,13 @@ public class Modal extends JDialog {
         pack();
         setVisible(true);
     }
+
+    /**
+     * Constructor for game's end Modal
+     * @param parent the parent JFrame that will be using it.
+     * @param title title of the window.
+     * @param message message inside the window.
+     */
     private Modal(String title, String message,JFrame parent ) {
         super(parent, title, true);
 
@@ -52,6 +59,12 @@ public class Modal extends JDialog {
         new Modal(parent, title, message);
     }
 
+    /**
+     * Method that creates an instance of Modal class constructor used for the game's end.
+     * @param parent the parent JFrame that will be using it.
+     * @param title title of the window.
+     * @param message message inside the window.
+     */
     public static void renderEndOfGame(JFrame parent, String title, String message){
         new Modal(title,message,parent);
     }

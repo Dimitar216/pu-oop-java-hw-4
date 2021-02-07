@@ -1,7 +1,5 @@
 package tiles;
 
-import ui.Modal;
-
 import java.awt.*;
 import java.awt.geom.Line2D;
 
@@ -51,6 +49,11 @@ public class Tile {
         }
     }
 
+    /**
+     * changes row and col of tile depending on the parameters
+     * @param row new row
+     * @param col new col
+     */
     public void move(int row,int col){
             this.row = row;
             this.col = col;
@@ -72,6 +75,12 @@ public class Tile {
         return color;
     }
 
+    /**
+     * checks if the white tile's move is valid
+     * @param moveRow row being moved to
+     * @param moveCol col being moved to
+     * @return true or false depending if the move is valid.
+     */
     public boolean isMoveValid(int moveRow,int moveCol){
         if(this.getColor().equals(Color.WHITE)) {
             int rowCoefficient = Math.abs(moveRow - this.row);
@@ -82,24 +91,31 @@ public class Tile {
         return false;
     }
 
-    public boolean isPlayerStuck(int moveRow,int moveCol,Tile[][] tile){
-        if(moveRow+1<=7){ if (tile[moveRow+1][moveCol] != null) { if(tile[moveRow+1][moveCol].getColor().equals(Color.RED)){ return false;
+    /**
+     * checks if player is stuck
+     * @param row row of tile being checked
+     * @param col col of tile being checked
+     * @param tile arr where the tiles are put in
+     * @return true if stuck false if not
+     */
+    public boolean isPlayerStuck(int row,int col,Tile[][] tile){
+        if(row+1<=7){ if (tile[row+1][col] != null) { if(tile[row+1][col].getColor().equals(Color.RED)){ return false;
                 }
             } else { return false;
             }
         }
-        if(moveRow-1>=0){ if (tile[moveRow-1][moveCol] != null) { if(tile[moveRow-1][moveCol].getColor().equals(Color.RED)){ return false;
+        if(row-1>=0){ if (tile[row-1][col] != null) { if(tile[row-1][col].getColor().equals(Color.RED)){ return false;
                 }
             } else {
                 return false;
             }
         }
-        if(moveCol + 1<=7){ if (tile[moveRow][moveCol+1] != null) { if(tile[moveRow][moveCol+1].getColor().equals(Color.RED)){ return false;
+        if(col + 1<=7){ if (tile[row][col+1] != null) { if(tile[row][col+1].getColor().equals(Color.RED)){ return false;
                 }
             } else { return false;
             }
         }
-        if(moveCol -1 >= 0){ if (tile[moveRow][moveCol-1] != null) { if(tile[moveRow][moveCol-1].getColor().equals(Color.RED)){ return false;
+        if(col -1 >= 0){ if (tile[row][col-1] != null) { if(tile[row][col-1].getColor().equals(Color.RED)){ return false;
                 }
             } else { return false;
             }
@@ -107,6 +123,13 @@ public class Tile {
         return true;
     }
 
+    /**
+     * renders outlines for the tile
+     * @param g graphics component
+     * @param lineDrawer graphics 2d drawer
+     * @param tileX x coordinate for line
+     * @param tileY y coordinate for line
+     */
     private static void outlineRenderer(Graphics g, Graphics2D lineDrawer, int tileX, int tileY) {
         g.setColor(Color.BLACK);
         Line2D line0 = new Line2D.Float(tileX, tileY, tileX, tileY +99);
